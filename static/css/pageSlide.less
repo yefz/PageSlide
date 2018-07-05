@@ -1,0 +1,113 @@
+// IE8 圆角兼容
+.border-radius-ie8(@size) {
+  z-index: 10;
+  border-radius:@size;
+  -moz-border-radius:@size;
+  -webkit-border-radius:@size;
+  behavior: url(static/js/PIE/PIE.htc);
+}
+// IE8 background-size 属性兼容
+.background-img(@url) {
+  background-image: url("../image/@{url}");
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./static/image/@{url}', sizingMethod='scale');
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+[data-PageSlide] {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &:hover .btn {
+    opacity: 1;
+  }
+
+  .items {
+    position: relative;
+    height: inherit;
+  }
+
+  .item {
+    float: left;
+    height: inherit;
+    background-size: cover; /* IE8下为拉伸填充 */
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: none\9; /* IE9及以下取消背景图，使用 filter 方式引入背景图 */
+  }
+
+  :root .item {
+    filter: none; /* 解决IE9 filter 生效问题 */
+  }
+
+  .item1 {
+    .background-img("img-1.jpg");
+  }
+  .item2 {
+    .background-img("img-2.jpg");
+  }
+  .item3 {
+    .background-img("img-3.jpg");
+  }
+  .item4 {
+    .background-img("img-4.jpg");
+  }
+
+  // 分页控制点
+  .pages {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    z-index: 10;
+
+    text-align: center;
+
+    > span {
+      display: inline-block;
+
+      margin: 0 7px;
+      width: 15px;
+      height: 15px;
+
+      background: #ccc;
+      cursor: pointer;
+
+      .border-radius-ie8(50%);
+
+    }
+
+    > span.on {
+      background: #39a6eb;
+    }
+  }
+
+  // 分页左右切换按钮
+  .btn{
+    position: absolute;
+    top:50%;
+
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+
+    color: #fff;
+    background: #000;
+    cursor: pointer;
+    opacity: 0;
+
+    .border-radius-ie8(50%);
+
+    &.L {
+      left: 0;
+    }
+    &.R {
+      right: 0;
+    }
+  }
+}
